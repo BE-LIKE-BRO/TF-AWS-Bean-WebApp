@@ -76,7 +76,7 @@ resource "aws_security_group" "Backend-SG" {
   }
 }
 
-resource "aws_security_group_rule" "name" {
+resource "aws_security_group_rule" "backend-self-allow" {
   type                     = "ingress"
   from_port                = 0
   to_port                  = 65535
@@ -84,4 +84,8 @@ resource "aws_security_group_rule" "name" {
   security_group_id        = aws_security_group.Backend-SG.id
   source_security_group_id = aws_security_group.Backend-SG.id
 
+}
+
+output "rule-id" {
+  value = aws_security_group_rule.backend-self-allow.id
 }
