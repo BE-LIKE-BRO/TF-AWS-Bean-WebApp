@@ -91,5 +91,5 @@ variable "privSub2CIDR" {
 }
 
 variable "privSub3CIDR" {
-  default = "172.21.6.0/24"
+  default = "172.21.7.0/24"
 }
