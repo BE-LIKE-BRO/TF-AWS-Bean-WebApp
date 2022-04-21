@@ -58,6 +58,14 @@ variable "dbname" {
   default = "accounts"
 }
 
+variable "db-param-name" {
+  default = "db-param-grp"
+}
+
+variable "db-param-family" {
+  default = "mysql5.7"
+}
+
 variable "instance_count" {
   default = "1"
 }

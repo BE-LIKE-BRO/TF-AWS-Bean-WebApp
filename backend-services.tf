@@ -14,16 +14,20 @@ resource "aws_elasticache_subnet_group" "elasticache-subnet-grp" {
   }
 }
 
+resource "aws_db_parameter_group" "db-param-grp" {
+  name   = var.db-param-name
+  family = var.db-param-family
+}
 resource "aws_db_instance" "BLB-RDS" {
   allocated_storage      = 20
   storage_type           = "gp2"
   engine                 = "mysql"
-  engine_version         = "5.6.34"
+  engine_version         = "5.7.16"
   instance_class         = "db.t2.micro"
   db_name                = var.dbname
   username               = var.dbuser
   password               = var.dbpass
-  parameter_group_name   = "default.mysql5.6"
+  parameter_group_name   = aws_db_parameter_group.db-param-grp.name
   multi_az               = "false"
   publicly_accessible    = "false"
   skip_final_snapshot    = true
@@ -36,7 +40,7 @@ resource "aws_elasticache_cluster" "BLB-cache" {
   engine               = "memcached"
   node_type            = "cache.t2.micro"
   num_cache_nodes      = 1
-  parameter_group_name = "default.memcached1.5"
+  parameter_group_name = "default.memcached1.6"
   port                 = 11211
   security_group_ids   = [aws_security_group.Backend-SG.id]
   subnet_group_name    = aws_elasticache_subnet_group.elasticache-subnet-grp.name
